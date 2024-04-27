@@ -1,0 +1,6 @@
+@Zeiterfassung_HostAddress = http://localhost:5187
+
+GET {{Zeiterfassung_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
