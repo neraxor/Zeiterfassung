@@ -6,36 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Zeiterfassung.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCommit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Locations",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Locations", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Projects",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Regulations",
                 columns: table => new
@@ -66,6 +41,47 @@ namespace Zeiterfassung.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Locations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Projects_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WorkSessions",
                 columns: table => new
                 {
@@ -75,22 +91,20 @@ namespace Zeiterfassung.Migrations
                     Start = table.Column<DateTime>(type: "datetime2", nullable: false),
                     End = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LocationId = table.Column<int>(type: "int", nullable: false),
-                    LocationId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
-                    ProjectId1 = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ProjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkSessions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WorkSessions_Locations_LocationId1",
-                        column: x => x.LocationId1,
+                        name: "FK_WorkSessions_Locations_LocationId",
+                        column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_WorkSessions_Projects_ProjectId1",
-                        column: x => x.ProjectId1,
+                        name: "FK_WorkSessions_Projects_ProjectId",
+                        column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -103,14 +117,24 @@ namespace Zeiterfassung.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkSessions_LocationId1",
-                table: "WorkSessions",
-                column: "LocationId1");
+                name: "IX_Locations_UserId",
+                table: "Locations",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkSessions_ProjectId1",
+                name: "IX_Projects_UserId",
+                table: "Projects",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkSessions_LocationId",
                 table: "WorkSessions",
-                column: "ProjectId1");
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkSessions_ProjectId",
+                table: "WorkSessions",
+                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkSessions_UserId",

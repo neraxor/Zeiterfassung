@@ -307,3 +307,4 @@ C:\Users\jaspe\source\repos\Zeiterfassung\API\Zeiterfassung\obj\Debug\net8.0\ref
 C:\Users\jaspe\source\repos\Zeiterfassung\API\Zeiterfassung\obj\Debug\net8.0\Zeiterfassung.pdb
 C:\Users\jaspe\source\repos\Zeiterfassung\API\Zeiterfassung\obj\Debug\net8.0\Zeiterfassung.genruntimeconfig.cache
 C:\Users\jaspe\source\repos\Zeiterfassung\API\Zeiterfassung\obj\Debug\net8.0\ref\Zeiterfassung.dll
+C:\Users\jaspe\source\repos\Zeiterfassung\API\Zeiterfassung\bin\Debug\net8.0\CsvHelper.dll

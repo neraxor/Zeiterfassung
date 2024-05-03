@@ -24,22 +24,33 @@ namespace Zeiterfassung.Migrations
 
             modelBuilder.Entity("Zeiterfassung.Models.Location", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("Zeiterfassung.Models.Project", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -48,7 +59,12 @@ namespace Zeiterfassung.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Projects");
                 });
@@ -92,6 +108,9 @@ namespace Zeiterfassung.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("WorkingHoursWeekly")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -108,19 +127,11 @@ namespace Zeiterfassung.Migrations
                     b.Property<DateTime?>("End")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
-                    b.Property<string>("LocationId1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ProjectId1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
@@ -130,28 +141,46 @@ namespace Zeiterfassung.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LocationId1");
+                    b.HasIndex("LocationId");
 
-                    b.HasIndex("ProjectId1");
+                    b.HasIndex("ProjectId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("WorkSessions");
                 });
 
+            modelBuilder.Entity("Zeiterfassung.Models.Location", b =>
+                {
+                    b.HasOne("Zeiterfassung.Models.User", "User")
+                        .WithMany("Locations")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Zeiterfassung.Models.Project", b =>
+                {
+                    b.HasOne("Zeiterfassung.Models.User", "User")
+                        .WithMany("Projects")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Zeiterfassung.Models.WorkSession", b =>
                 {
                     b.HasOne("Zeiterfassung.Models.Location", "Location")
                         .WithMany()
-                        .HasForeignKey("LocationId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("Zeiterfassung.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.HasOne("Zeiterfassung.Models.User", "User")
                         .WithMany()
@@ -164,6 +193,13 @@ namespace Zeiterfassung.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Zeiterfassung.Models.User", b =>
+                {
+                    b.Navigation("Locations");
+
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }

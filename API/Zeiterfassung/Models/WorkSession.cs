@@ -12,10 +12,8 @@ public class WorkSession
     [Required]
     public DateTime Start { get; set; }
     public DateTime? End { get; set; }
-    [Required]
-    public int LocationId { get; set; }
+    public int? LocationId { get; set; }
     public virtual Location Location { get; set; }
-    [Required]
-    public int ProjectId { get; set; }
+    public int? ProjectId { get; set; }
     public virtual Project Project { get; set; }
 }

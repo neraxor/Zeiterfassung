@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Zeiterfassung.Data;
 using Zeiterfassung.Data.DTO;
+using Zeiterfassung.DTO;
 using Zeiterfassung.Models;
 
 namespace Zeiterfassung.Controllers;
@@ -16,13 +17,20 @@ public class AuthController : ControllerBase
     private static User _user = new User();
     private readonly IConfiguration _config;
     private readonly MyDbContext _context;
+
     public AuthController(IConfiguration configuration, MyDbContext context)
     {
         _config = configuration;
         _context = context;
     }
+
+    /// <summary>
+    /// allows a user to register an account
+    /// </summary>
+    /// <param name="request">request has userdata</param>
+    /// <returns></returns>
     [HttpPost("register")]
-    public ActionResult Register(UserAuthDto request)
+    public ActionResult Register(UserRegisterDto request)
     {
         if (!ModelState.IsValid)
         {
@@ -50,16 +58,19 @@ public class AuthController : ControllerBase
         }
         return BadRequest("User could not be created");
     }
-    
+    /// <summary>
+    /// login a user
+    /// </summary>
+    /// <param name="request">uses username and password</param>
+    /// <returns>jwt token</returns>
     [HttpPost("login")]
-    public ActionResult Login(UserAuthDto request)
+    public ActionResult Login(UserLoginDto request)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest("Invalid model state");
         }
         User? user = _context.Users.FirstOrDefault(s => s.Username == request.Username);
-
         if (user is null)
         {
             return BadRequest("User not found");
@@ -71,19 +82,26 @@ public class AuthController : ControllerBase
         string token = CreateToken(user);
         return Ok(token);
     }
+
+    /// <summary>
+    /// generates a jwt token for a user to authenticate
+    /// </summary>
+    /// <param name="user">userdata</param>
+    /// <returns>jwt token</returns>
     private string CreateToken(User user)
     {
         List<Claim> claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name,user.Username),
+            new Claim(ClaimTypes.Name, user.Username),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
         };
-        SymmetricSecurityKey key = 
+        SymmetricSecurityKey key =
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("JWT:Token").Value!));
         SigningCredentials cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
         JwtSecurityToken token = new JwtSecurityToken(
             claims: claims,
+            // expires: DateTime.Now.AddMinutes(1),
             expires: DateTime.Now.AddDays(1),
             signingCredentials: cred
         );

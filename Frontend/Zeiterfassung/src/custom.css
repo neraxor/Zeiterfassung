@@ -1,0 +1,38 @@
+  .navbar-logo-text {
+    margin-left: 0.5rem; 
+  }
+  
+  footer {
+    background-color: #dce4ef;
+    padding: 10px;
+    color: #333;
+  }
+    
+.footer {
+  background-color: #dce4ef;
+  padding: 10px 0; 
+  color: #333;
+  width: 100%;
+  margin-top: 20px;
+  border: 1px solid #e0e0e0;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.navbar-container {
+  background-color: #dce4ef;
+  padding: 10px;
+  color: #333;
+  margin-bottom: 5px;
+  border: 1px solid #e0e0e0;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.navbar-item {
+  background-color: #dce4ef;
+  padding: 10px;
+  color: #333;
+  margin-right: 5px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+}

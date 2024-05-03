@@ -12,4 +12,8 @@ public class User
     public string PasswordHash { get; set; }
     [Required]
     public string Email { get; set; }
+    [Required]
+    public int WorkingHoursWeekly { get; set; }
+    public List<Location> Locations { get; set; }
+    public List<Project> Projects { get; set; }
 }

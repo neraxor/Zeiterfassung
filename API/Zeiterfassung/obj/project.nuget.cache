@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "1HP3TAKaLdimSn1f3Uz0E9KT8j3VEy1iBXPGM1cuv2Q1+rltroWKr0LEwZRYUnl4xYlDWDMPQkQLBI8V4JEDbQ==",
+  "dgSpecHash": "ULyvUd9mBz/QNYCVIgMayokU+ODURf/4zZSWbaUiUCD6hytQfDVl1rQeK26NIMFW+Mx8fSiNPtRd1oUjl4KeOA==",
   "success": true,
   "projectFilePath": "C:\\Users\\jaspe\\source\\repos\\Zeiterfassung\\API\\Zeiterfassung\\Zeiterfassung.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jaspe\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\jaspe\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\jaspe\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\jaspe\\.nuget\\packages\\csvhelper\\32.0.1\\csvhelper.32.0.1.nupkg.sha512",
     "C:\\Users\\jaspe\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\jaspe\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.4\\microsoft.aspnetcore.authentication.jwtbearer.8.0.4.nupkg.sha512",
     "C:\\Users\\jaspe\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
