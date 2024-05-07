@@ -5,16 +5,20 @@ namespace Zeiterfassung.Data
 {
     public class MyDbContext : DbContext
     {
+        public MyDbContext() : base()
+        {
+        }
         public MyDbContext(DbContextOptions<MyDbContext> options)
             : base(options)
         {
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<WorkSession> WorkSessions { get; set; }
-        public DbSet<Location> Locations { get; set; }
-        public DbSet<Project> Projects { get; set; }
-        public DbSet<Regulation> Regulations { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<WorkSession> WorkSessions { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<Regulation> Regulations { get; set; }
+        
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

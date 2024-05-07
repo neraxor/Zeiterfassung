@@ -30,6 +30,10 @@ public class WorkSessionController : ControllerBase
     [HttpPost("SaveWorkSession")]
     public IActionResult SaveWorkSession([FromBody] WorkSessionDto request)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest("Invalid model state");
+        }
         int userIdClaim = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier),
             out var tempUserId)
             ? tempUserId
@@ -43,7 +47,7 @@ public class WorkSessionController : ControllerBase
                          && ws.Start.Date == DateTime.UtcNow.Date
                          && ws.End == null)
             .FirstOrDefault();
-        if (currentWorkSession != null)
+         if (currentWorkSession != null)
         {
             currentWorkSession.Start = request.Start.ToUniversalTime();
             currentWorkSession.End = request.End?.ToUniversalTime();
