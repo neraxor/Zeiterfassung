@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Form, FormGroup, Input, Button, Row, Col } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 
+//Register component
 const Register: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -11,20 +12,25 @@ const Register: React.FC = () => {
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
 
+  //handleUsernameChange function to set the username
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
 
+  //handlePasswordChange function to set the password
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
+  //handleEmailChange function to set the email
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
+  //useNavigate hook to navigate back to home after registration
   const navigate = useNavigate();
-
+  
+  //handleRegister function with API call
   const handleRegister = async (event: FormEvent) => {
     event.preventDefault();
 

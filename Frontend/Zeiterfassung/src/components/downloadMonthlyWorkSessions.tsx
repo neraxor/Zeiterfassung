@@ -5,10 +5,12 @@ interface DownloadWorkSessionsProps {
   token: string;
 }
 
+//DownloadWorkSessions component
 const DownloadWorkSessions: React.FC<DownloadWorkSessionsProps> = ({ token }) => {
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
 
+  //downloadMonthlyWorkSessions function with API call
   const downloadMonthlyWorkSessions = async () => {
     const response = await fetch(`https://localhost:7249/WorkSession/DownloadMonthlyWorkSessions?year=${year}&month=${month}`, {
       method: 'GET',
@@ -17,7 +19,6 @@ const DownloadWorkSessions: React.FC<DownloadWorkSessionsProps> = ({ token }) =>
         'Content-Type': 'text/csv'
       }
     });
-
     if (response.ok) {
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);

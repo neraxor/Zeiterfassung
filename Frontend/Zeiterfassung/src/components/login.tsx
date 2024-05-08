@@ -3,6 +3,7 @@ import { AuthContext } from './AuthContext';
 import { Row, Col, Button, Form, FormGroup, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
+//Login component
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +13,7 @@ const Login: React.FC = () => {
   if (!authContext) {
     throw new Error('AuthContext is undefined');
   }
-
+  //handleLogin function with API call
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const loginDetails = {
@@ -42,10 +43,12 @@ const Login: React.FC = () => {
     }
   };
 
+  //handleUsernameChange function to set the username
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
 
+  //handlePasswordChange function to set the password
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };

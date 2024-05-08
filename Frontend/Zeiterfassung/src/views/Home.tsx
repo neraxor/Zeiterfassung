@@ -9,18 +9,20 @@ import Stundenkonto from '../components/Stundenkonto';
 import DownloadWorkSessions from '../components/downloadMonthlyWorkSessions';
 import StatisticsComponent from '../components/StatisticsComponent';
 
+// Home View
 const Home = () => {
   const authContext = useContext(AuthContext); 
   const [sessionUpdated, setSessionUpdated] = useState<boolean>(false);
-
+  //handleSessionUpdate function to set the sessionUpdated state
   const handleSessionUpdate = () => {
     setSessionUpdated(true);
   };
-
+  //resetSessionUpdate function to reset the sessionUpdated state
   const resetSessionUpdate = () => {
     setSessionUpdated(false);
   };
   
+  // main point of the App. initiales the most components
   return (
     <Container fluid>
       <Row>

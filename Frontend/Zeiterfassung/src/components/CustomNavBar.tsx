@@ -6,14 +6,13 @@ import { AuthContext } from './AuthContext';
 import { Button } from 'reactstrap';
 import '../custom.css';
 
+// CustomNavbar component
 const CustomNavbar: FC = () => {
   const authContext = useContext(AuthContext);
   if (!authContext) {
     throw new Error('AuthContext is undefined');
   }
-  
   const { isLoggedIn, logout } = authContext;  
-
   return (
     <div className="navbar-container"> 
       <Navbar color="light" light expand="md">
@@ -35,5 +34,4 @@ const CustomNavbar: FC = () => {
     </div>
   );
 };
-
 export default CustomNavbar;

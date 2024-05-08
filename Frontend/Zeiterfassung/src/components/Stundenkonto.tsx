@@ -7,7 +7,7 @@ interface StundenkontoProps {
   sessionUpdated: boolean;
   resetUpdate: () => void;
 }
-
+//Stundenkonto component
 const Stundenkonto: React.FC<StundenkontoProps> = ({ token, sessionUpdated, resetUpdate }) => {
   const [totalHours, setTotalHours] = useState(40);
   const [workedHours, setWorkedHours] = useState(0);
@@ -19,7 +19,7 @@ const Stundenkonto: React.FC<StundenkontoProps> = ({ token, sessionUpdated, rese
   useEffect(() => {
     fetchWorkedHours();
   }, []);
-
+  //useEffect hook to calculate the remaining hours and over hours
   useEffect(() => {
     const calculatedRemaining = parseFloat((totalHours - workedHours).toFixed(2));
     if (calculatedRemaining < 0) {
@@ -36,7 +36,7 @@ const Stundenkonto: React.FC<StundenkontoProps> = ({ token, sessionUpdated, rese
       resetUpdate();
     }
   }, [totalHours, workedHours, sessionUpdated, resetUpdate]);
-
+  //fetchWorkedHours function to fetch the worked hours
   const fetchWorkedHours = async () => {
     try {
       const response = await fetch('https://localhost:7249/WorkSession/GetWeeklyWorkHours', {

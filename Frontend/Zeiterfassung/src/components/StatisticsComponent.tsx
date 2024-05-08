@@ -8,17 +8,20 @@ interface StatsData {
   weekdayAverages: { dayOfWeek: number, averageHours: number }[];
 }
 
+//getDayName function to get the day name from the day number modulo 7
 const getDayName = (dayNumber: number) => {
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   return days[dayNumber % 7];
 };
 
+//StatisticsComponent
 const StatisticsComponent: React.FC<{ token: string }> = ({ token }) => {
   const [stats, setStats] = useState<StatsData | null>(null);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const authContext = useContext(AuthContext);
 
+  // useEffect hook to fetch the statistics data with API call
   useEffect(() => {
     const fetchStats = async () => {
       const response = await fetch(`https://localhost:7249/WorkSession/GetMonthlyAverages?year=${year}&month=${month}`, {

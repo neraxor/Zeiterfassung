@@ -5,6 +5,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { AuthContext } from '../components/AuthContext'; 
 import Registercomponent from '../components/registerComponent';
 
+//Register View initialiates the Registercomponent to register a new user
 const Register = () => {
   const authContext = useContext(AuthContext); 
 

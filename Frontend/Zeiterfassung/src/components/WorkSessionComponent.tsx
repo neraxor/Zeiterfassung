@@ -3,6 +3,7 @@ import { Row, Col, Button, Form, FormGroup, Input, Card, CardBody, CardHeader } 
 import { AuthContext } from './AuthContext';
 import moment from 'moment-timezone';
 
+// WorkSession DTO
 interface WorkSession {
   UserId: number | null;
   Start: Date;
@@ -11,12 +12,14 @@ interface WorkSession {
   ProjectId: number | null;
 }
 
+// Project DTO
 interface Project {
   id: string;
   name: string;
   description: string;
 }
 
+// Location DTO
 interface Location {
   id: number;
   description: string;
@@ -29,6 +32,7 @@ interface WorkSessionProps {
   onSessionSave: () => void;
 }
 
+// WorkSessionComponent
 const WorkSessionComponent: React.FC<WorkSessionProps> = ({ token, onSessionSave }) => {
   const [workSession, setWorkSession] = useState<WorkSession>({
     UserId: null,
@@ -37,18 +41,21 @@ const WorkSessionComponent: React.FC<WorkSessionProps> = ({ token, onSessionSave
     LocationId: null,
     ProjectId: null
   });
-
+  // Locations and Projects dropdown options
   const [locations, setLocations] = useState<Location[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
+  // Error and feedback messages
   const [error, setError] = useState('');
-  const authContext = useContext(AuthContext);
   const [feedback, setFeedback] = useState('');
+  // set AuthContext
+  const authContext = useContext(AuthContext);
+  // useEffect hook to fetch dropdown options and current work session
   useEffect(() => {
     fetchDropdownOptions().then(() => {
       fetchCurrentWorkSession();
     });
   }, [token]);
-
+  // fetchDropdownOptions function to fetch the dropdown options
   const fetchDropdownOptions = async () => {
     try {
       const locationResponse = await fetch('https://localhost:7249/User/GetLocations', {
@@ -75,7 +82,7 @@ const WorkSessionComponent: React.FC<WorkSessionProps> = ({ token, onSessionSave
       console.error('Failed to fetch dropdown options:', error);
     }
   };
-
+  // fetchCurrentWorkSession function to fetch the current work session
   const fetchCurrentWorkSession = async () => {
     try {
       const response = await fetch('https://localhost:7249/WorkSession/GetCurrentWorkSession', {
@@ -100,12 +107,12 @@ const WorkSessionComponent: React.FC<WorkSessionProps> = ({ token, onSessionSave
       console.error('Failed to fetch current work session:', error);
     }
   };
-
+  // handleInputChange function to handle input changes
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
     setWorkSession(prev => ({ ...prev, [name]: value }));
   };
-
+  // handleTime function to handle time changes
   const handleTime = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value: newTime } = event.target; 
     setWorkSession(prev => {
@@ -121,7 +128,7 @@ const WorkSessionComponent: React.FC<WorkSessionProps> = ({ token, onSessionSave
       };
     });
   };
-
+  // handleDate function to handle date changes
   const handleDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value: newDate } = event.target;
     setWorkSession(prev => {
@@ -137,7 +144,7 @@ const WorkSessionComponent: React.FC<WorkSessionProps> = ({ token, onSessionSave
       };
     });
   };
-
+  // handleSubmit function to handle form submission
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {

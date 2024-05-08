@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import '../custom.css';
 
+// Custom footer component
 const CustomFooter = () => {
   return (
     <footer className="footer">
